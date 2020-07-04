@@ -1,27 +1,32 @@
-import axios from "axios";
-import { HOURS } from "../utils/constants";
-const SERVICE_URL = "https://swapi.dev";
+import axios from 'axios';
+// eslint-disable-next-line import/extensions
+import { HOURS } from '../utils/constants';
 
-function calculateStops(consumables, MGLT, distance) {
-  const timeYieldShip = consumables.split(" ");
+const SERVICE_URL = 'https://swapi.dev';
 
-  if (timeYieldShip[1] === "day" || timeYieldShip[1] === "days") {
-    const distanceYield = timeYieldShip[0] * HOURS.DAY * MGLT;
-    const stops = distance / distanceYield;
-    return stops;
-  } else if (timeYieldShip[1] === "week" || timeYieldShip[1] === "weeks") {
-    const distanceYield = timeYieldShip[0] * HOURS.DAY * 7 * MGLT;
-    const stops = distance / distanceYield;
-    return stops;
-  } else if (timeYieldShip[1] === "month" || timeYieldShip[1] === "months") {
-    const distanceYield = timeYieldShip[0] * HOURS.DAY * 30 * MGLT;
-    const stops = distance / distanceYield;
-    return stops;
-  } else if (timeYieldShip[1] === "year" || timeYieldShip[1] === "years") {
-    const distanceYield = timeYieldShip[0] * HOURS.DAY * 365 * MGLT;
-    const stops = distance / distanceYield;
-    return stops;
+function calculateStops(amount, MGLT, days, distance) {
+  const distanceYield = amount * HOURS.DAY * days * MGLT;
+  const stops = distance / distanceYield;
+  return stops;
+}
+function calculatesYield(consumables, MGLT, distance) {
+  const timeYieldShip = consumables.split(' ');
+  const amount = timeYieldShip[0];
+  const calendar = timeYieldShip[1];
+
+  if (calendar === 'day' || calendar === 'days') {
+    return calculateStops(amount, MGLT, 1, distance);
   }
+  if (calendar === 'week' || calendar === 'weeks') {
+    return calculateStops(amount, MGLT, 7, distance);
+  }
+  if (calendar === 'month' || calendar === 'months') {
+    return calculateStops(amount, MGLT, 30, distance);
+  }
+  if (calendar === 'year' || calendar === 'years') {
+    return calculateStops(amount, MGLT, 365, distance);
+  }
+  return 0;
 }
 
 function calculateStartShip(payload, distance) {
@@ -29,20 +34,18 @@ function calculateStartShip(payload, distance) {
 
   payload.forEach((ship) => {
     const { name, consumables, MGLT } = ship;
-    const stops = calculateStops(consumables, MGLT, distance);
+    const stops = calculatesYield(consumables, MGLT, distance);
     ships[name] = Math.round(stops);
   });
-
-  console.log(ships);
 }
 
 export default class ComplexoService {
-  static getStarShips = async (distance) => {
+  static async getStarShips(distance) {
     const URL = `${SERVICE_URL}/api/starships/`;
 
     await axios.get(URL).then((result) => {
       const payload = result.data.results;
       calculateStartShip(payload, distance);
     });
-  };
+  }
 }

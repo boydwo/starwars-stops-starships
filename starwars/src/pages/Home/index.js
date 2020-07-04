@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
-// import PropTypes from "prop-types";
-import { Wrapper, Content } from "./styles";
-
-import ApiService from "../../services/ApiService";
-
-import starWars from "../../assets/images/starwars.png";
+import React, { useEffect } from 'react';
+import { Wrapper, Content } from './styles';
+import ApiService from '../../services/ApiService';
+import starWars from '../../assets/images/starwars.png';
 
 function Home() {
   useEffect(() => {
@@ -15,7 +12,7 @@ function Home() {
   return (
     <Wrapper>
       <Content>
-        <img src={starWars} alt='StarWars' />
+        <img src={starWars} alt="StarWars" />
         <h1>SHIP STOP CALCULATOR</h1>
         {/* <Form onSubmit={handleSubmit}>
           <span></span>
