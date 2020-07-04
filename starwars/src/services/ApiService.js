@@ -37,6 +37,7 @@ function calculateStartShip(payload, distance) {
     const stops = calculatesYield(consumables, MGLT, distance);
     ships[name] = Math.round(stops);
   });
+  console.log(ships);
 }
 
 export default class ComplexoService {
