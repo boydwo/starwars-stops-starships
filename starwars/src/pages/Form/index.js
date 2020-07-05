@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 
-import history from '../../services/history';
+// import history from '../../services/history';
 
 import { WrapperForm } from './styles';
 import ApiService from '../../services/ApiService';
@@ -13,7 +13,7 @@ function StarForm(props) {
   const { getStarShips } = props;
   function handleSubmit(data) {
     console.log(data);
-    getStarShips();
+    getStarShips(data);
     // eslint-disable-next-line react/prop-types
     props.history.push('/result');
   }
@@ -29,6 +29,6 @@ function StarForm(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getStarShips: () => dispatch(ApiService),
+  getStarShips: (distance) => dispatch(ApiService.getStarShips(distance)),
 });
 export default connect(null, mapDispatchToProps)(StarForm);
