@@ -1,34 +1,34 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { Formik, Form as FormikForm } from 'formik';
+import { connect } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
+import { Form, Input } from '@rocketseat/unform';
+
+import history from '../../services/history';
 
 import { WrapperForm } from './styles';
 import ApiService from '../../services/ApiService';
 
-function Form() {
-  function handleForm(data) {
-    ApiService.getStarShips(data.value);
-    return <Redirect to="/result" />;
+function StarForm(props) {
+  // eslint-disable-next-line react/prop-types
+  const { getStarShips } = props;
+  function handleSubmit(data) {
+    console.log(data);
+    getStarShips();
+    // eslint-disable-next-line react/prop-types
+    props.history.push('/result');
   }
   return (
-    <Formik
-      initialValues={{ value: '' }}
-      onSubmit={(values, actions) => {
-        handleForm(values);
-        actions.setSubmitting(false);
-      }}
-    >
-      {({ handleSubmit, handleChange }) => (
-        <FormikForm onSubmit={handleSubmit}>
-          <WrapperForm>
-            <span>Enter the distance in MGLT you want to travel</span>
-            <input name="value" type="number" onChange={handleChange} />
-            <button type="submit">Calculate</button>
-          </WrapperForm>
-        </FormikForm>
-      )}
-    </Formik>
+    <Form onSubmit={handleSubmit}>
+      <WrapperForm>
+        <span>Enter the distance in MGLT you want to travel</span>
+        <Input name="value" type="number" />
+        <button type="submit">Calculate</button>
+      </WrapperForm>
+    </Form>
   );
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  getStarShips: () => dispatch(ApiService),
+});
+export default connect(null, mapDispatchToProps)(StarForm);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import history from './history';
+import history from './history';
 
 import { HOURS } from '../utils/constants';
 import { setStops } from '../actions/starShips';
@@ -47,9 +47,12 @@ function calculateStartShip(payload, distance) {
 }
 
 export default class ComplexoService {
-  static setSops = (stops) => async (dispatch) => dispatch(setStops(stops));
+  static setSops = (stops) => async (dispatch) => {
+    dispatch(setStops(stops));
+    dispatch(history.Push('/posts'));
+  };
 
-  static getStarShips(distance) {
+  static getStarShips = (distance) => async (dispatch) => {
     const URL = `${SERVICE_URL}/api/starships/`;
 
     axios.get(URL).then((result) => {
@@ -57,7 +60,7 @@ export default class ComplexoService {
       const stops = calculateStartShip(payload, distance);
       console.log(stops);
 
-      this.setSops(stops);
+      dispatch(setStops(stops));
     });
-  }
+  };
 }
