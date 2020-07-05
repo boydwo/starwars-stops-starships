@@ -58,8 +58,6 @@ export default class ComplexoService {
     axios.get(URL).then((result) => {
       const payload = result.data.results;
       const stops = calculateStartShip(payload, distance);
-      console.log(stops);
-
       dispatch(setStops(stops));
     });
   };

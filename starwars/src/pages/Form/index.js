@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
-
 // import history from '../../services/history';
 
 import { WrapperForm } from './styles';
@@ -12,10 +11,9 @@ function StarForm(props) {
   // eslint-disable-next-line react/prop-types
   const { getStarShips } = props;
   function handleSubmit(data) {
-    console.log(data);
     getStarShips(data);
     // eslint-disable-next-line react/prop-types
-    props.history.push('/result');
+    // props.history.push('/result');
   }
   return (
     <Form onSubmit={handleSubmit}>
@@ -29,6 +27,8 @@ function StarForm(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getStarShips: (distance) => dispatch(ApiService.getStarShips(distance)),
+  getStarShips: (distance) => {
+    dispatch(ApiService.getStarShips(distance));
+  },
 });
 export default connect(null, mapDispatchToProps)(StarForm);
