@@ -1,6 +1,8 @@
 import axios from 'axios';
-// eslint-disable-next-line import/extensions
+// import history from './history';
+
 import { HOURS } from '../utils/constants';
+import { setStops } from '../actions/starShips';
 
 const SERVICE_URL = 'https://swapi.dev';
 
@@ -30,23 +32,32 @@ function calculatesYield(consumables, MGLT, distance) {
 }
 
 function calculateStartShip(payload, distance) {
-  const ships = {};
+  const ships = [];
 
   payload.forEach((ship) => {
     const { name, consumables, MGLT } = ship;
     const stops = calculatesYield(consumables, MGLT, distance);
-    ships[name] = Math.round(stops);
+    const shipStops = {
+      name,
+      stops,
+    };
+    ships.push(shipStops);
   });
-  console.log(ships);
+  return ships;
 }
 
 export default class ComplexoService {
-  static async getStarShips(distance) {
+  static setSops = (stops) => async (dispatch) => dispatch(setStops(stops));
+
+  static getStarShips(distance) {
     const URL = `${SERVICE_URL}/api/starships/`;
 
-    await axios.get(URL).then((result) => {
+    axios.get(URL).then((result) => {
       const payload = result.data.results;
-      calculateStartShip(payload, distance);
+      const stops = calculateStartShip(payload, distance);
+      console.log(stops);
+
+      this.setSops(stops);
     });
   }
 }

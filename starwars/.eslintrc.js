@@ -20,6 +20,8 @@ module.exports = {
   rules: {
     'react/button-has-type': 'off',
     'prettier/prettier': 'error',
+    'react/jsx-props-no-spreading': 'off',
+    'react/forbid-prop-types': 'off',
     'react/jsx-filename-extension': [
       'warn',
       {

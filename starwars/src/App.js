@@ -1,14 +1,22 @@
 import React from 'react';
-import Home from './pages/Home';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+
+import Routes from './routes';
+import history from './services/history';
+
+import store from './store';
 
 import GlobalStyle from './styles/global';
 
 function App() {
   return (
-    <>
-      <Home />
-      <GlobalStyle />
-    </>
+    <Provider store={store}>
+      <Router history={history}>
+        <Routes />
+        <GlobalStyle />
+      </Router>
+    </Provider>
   );
 }
 
