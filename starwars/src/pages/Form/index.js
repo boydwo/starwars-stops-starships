@@ -1,26 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import * as Yup from 'yup';
+
 import { Form, Input } from '@rocketseat/unform';
-// import history from '../../services/history';
 
 import { WrapperForm } from './styles';
 import ApiService from '../../services/ApiService';
 
+const schema = Yup.object().shape({
+  value: Yup.string().required('Enter a value'),
+});
+
 function StarForm(props) {
-  // eslint-disable-next-line react/prop-types
-  const { getStarShips } = props;
+  const { getStarShips, history } = props;
 
   function handleSubmit(data) {
-    // eslint-disable-next-line radix
     const distance = parseInt(data.value, 10);
     getStarShips(distance);
-    // eslint-disable-next-line react/prop-types
-    props.history.push('/result');
+    history.push('/result');
   }
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form schema={schema} onSubmit={handleSubmit}>
       <WrapperForm>
         <span>Enter the distance in MGLT you want to travel</span>
         <Input name="value" type="number" />
@@ -36,3 +38,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 export default withRouter(connect(null, mapDispatchToProps)(StarForm));
+
+StarForm.propTypes = {
+  getStarShips: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};

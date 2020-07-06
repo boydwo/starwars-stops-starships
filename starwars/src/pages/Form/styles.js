@@ -33,9 +33,11 @@ export const WrapperForm = styled.div`
 
   button {
     margin: 10px 0 40px;
-    height: 44px;
+    height: 100%;
+    max-height: 7vh;
+    min-height: 7vh;
     width: 100%;
-    max-width: 100px;
+    max-width: 20vh;
     background: #4b1418;
     font-weight: bold;
     color: #fff;

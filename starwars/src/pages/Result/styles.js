@@ -4,14 +4,14 @@ export const WrapperBox = styled.div`
   margin-top: 20px;
   width: 100%;
   height: 100%;
-  max-width: 40vh;
+  max-width: 80vh;
   background: #4b1418;
   color: #fff;
   border-radius: 10px;
 
   .box-title {
     width: 100%;
-    max-width: 40vh;
+    max-width: 80vh;
     background: #d0c35d;
     border-radius: 10px 10px 0 0;
     color: #4b1418;
@@ -32,7 +32,7 @@ export const WrapperBox = styled.div`
     }
     td {
       border-bottom: 1px solid #d0c35d;
-      font-size: 18px;
+      font-size: 16px;
       padding: 8px;
     }
   }
@@ -43,6 +43,7 @@ export const Button = styled.button`
   max-height: 7vh;
   width: 100%;
   max-width: 20vh;
+  min-height: 7vh;
   background: #d0c35d;
   font-weight: bold;
   color: black;
@@ -54,5 +55,13 @@ export const Button = styled.button`
   &:hover {
     background: #4b1418;
     color: #fff;
+    .link {
+      color: #fff;
+    }
+  }
+  .link {
+    color: black;
+    height: 100%;
+    width: 100%;
   }
 `;

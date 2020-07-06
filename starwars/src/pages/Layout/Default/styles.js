@@ -3,6 +3,7 @@ import starWars from '../../../assets/images/star-wars.png';
 
 export const Wrapper = styled.div`
   height: 100%;
+  overflow: auto;
   background: url(${starWars});
   display: flex;
   justify-content: center;
@@ -12,14 +13,15 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
+  height: 100%;
   max-width: 100vh;
   width: 100%;
-  max-height: 100vh;
-  height: 100%;
   background: #4b4b4b;
   border-radius: 5px;
+  overflow: auto;
 
   img {
+    margin-top: 20px;
     max-height: 200px;
   }
   h1 {
@@ -29,12 +31,12 @@ export const Content = styled.div`
   }
 
   .subContent {
+    overflow: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     text-align: center;
-    height: 100%;
     width: 100%;
   }
 `;

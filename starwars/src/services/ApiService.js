@@ -8,7 +8,7 @@ const SERVICE_URL = 'https://swapi.dev';
 function calculateStops(amount, MGLT, days, distance) {
   const distanceYield = amount * HOURS.DAY * days * MGLT;
   const stops = distance / distanceYield;
-  return stops;
+  return Math.round(stops);
 }
 function calculatesYield(consumables, MGLT, distance) {
   const timeYieldShip = consumables.split(' ');
@@ -48,12 +48,14 @@ function calculateStartShip(payload, distance) {
 export default class ComplexoService {
   static getStarShips = (distance) => async (dispatch) => {
     const URL = `${SERVICE_URL}/api/starships/`;
-
     axios.get(URL).then((result) => {
       const payload = result.data.results;
       const stops = calculateStartShip(payload, distance);
-      console.log(stops);
       dispatch(setStops(stops));
     });
+  };
+
+  static calculatesStarSHipsYield = (data, value) => {
+    return calculateStartShip(data, value);
   };
 }

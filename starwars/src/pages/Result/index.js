@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { WrapperBox, Button } from './styles';
 
 function Result({ stops }) {
-  console.log('paradas', stops);
-
   return (
     <>
       <WrapperBox>
@@ -15,30 +13,38 @@ function Result({ stops }) {
           <h2>RESULT:</h2>
         </div>
         <table>
-          {stops.forEach((ship) => (
+          <thead>
             <tr>
-              <th>{ship.name}</th>
-              <th>{ship.stops}</th>
+              <th>StarShip</th>
+              <th>Total Stops</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {stops && stops.length > 0
+              ? stops.map((ship) => (
+                  <tr key={ship.name}>
+                    <td>{ship.name}</td>
+                    <td>{ship.stops}</td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
         </table>
       </WrapperBox>
       <Button>
-        <Link to="/">New Calculation</Link>
+        <Link to="/" className="link">
+          New Calculation
+        </Link>
       </Button>
     </>
   );
 }
 const mapStateToProps = (state) => ({
-  stops: state.starShipsReducer.starShips,
+  stops: state.starShipsReducer.stops,
 });
 
 export default withRouter(connect(mapStateToProps)(Result));
 
 Result.propTypes = {
-  stops: PropTypes.array,
-};
-
-Result.defaultProps = {
-  stops: [],
+  stops: PropTypes.array.isRequired,
 };
