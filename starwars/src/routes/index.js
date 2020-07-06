@@ -9,7 +9,7 @@ import Result from '../pages/Result';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={(props) => <Form {...props} />} />
+      <Route exact path="/" component={(props) => <Form {...props} />} />
       <Route
         path="/result"
         component={(props) => <Result {...props} />}

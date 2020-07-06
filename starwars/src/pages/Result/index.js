@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -22,7 +23,9 @@ function Result({ stops }) {
           ))}
         </table>
       </WrapperBox>
-      <Button>New Calculation</Button>
+      <Button>
+        <Link to="/">New Calculation</Link>
+      </Button>
     </>
   );
 }
@@ -30,7 +33,7 @@ const mapStateToProps = (state) => ({
   stops: state.starShipsReducer.starShips,
 });
 
-export default connect(mapStateToProps)(Result);
+export default withRouter(connect(mapStateToProps)(Result));
 
 Result.propTypes = {
   stops: PropTypes.array,
